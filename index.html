@@ -17,7 +17,7 @@
     <!-- 卡片類型 -->
     <meta property="og:type" content="website">
     
-    <title>Angela-Sandbox - PDF Magazine Demo</title>
+    <title>《千橡》2025年秋 - CCCA JOURNAL No.80</title>
 
     <style>
         * {
@@ -31,27 +31,59 @@
             height: 100%;
             background-color: #1e1e1e;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* 滿版原生檢視器，強制單頁適配 */
-        .magazine-view {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            display: block;
+        .container {
+            text-align: center;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .container img {
+            width: 180px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            margin-bottom: 20px;
+        }
+
+        .container h1 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .container p {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007aff;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <!-- 使用最直接的原生讀取，並加上強制單頁與符合寬度參數 -->
-    <iframe 
-        src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#view=FitH&pagemode=none" 
-        class="magazine-view" 
-        type="application/pdf">
-        <p>您的浏览器不支持预览，请 <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击此处下载杂志 PDF</a>。</p>
-    </iframe>
+    <div class="container">
+        <img src="images/cover.jpg" alt="《千橡》封面">
+        <h1>《千橡》2025年秋</h1>
+        <p>CCCA JOURNAL No.80</p>
+        <!-- 點擊後直接用手機原生最高效能的方式打開 PDF，保證大小完美、絕對可上下捲動 -->
+        <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" class="btn">点击开始阅读杂志</a>
+    </div>
 
 </body>
 </html>
