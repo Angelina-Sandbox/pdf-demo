@@ -31,27 +31,60 @@
             height: 100%;
             background-color: #1e1e1e;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* 單純乾淨的滿版 PDF 閱讀視窗 */
-        .magazine-view {
+        /* 給電腦端看的滿版檢視器 */
+        .desktop-view {
             width: 100%;
-            height: 100vh;
+            height: 100%;
             border: none;
             display: block;
+        }
+
+        /* 給手機端看的提示畫面（萬一沒有自動跳轉時的保險） */
+        .mobile-fallback {
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        .mobile-fallback a {
+            display: inline-block;
+            margin-top: 15px;
+            background-color: #007aff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <!-- 一進來直接滿版顯示 PDF，絕不囉唆、不需要點任何按鈕 -->
-    <iframe 
-        src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#toolbar=1&navpanes=0&view=FitH" 
-        class="magazine-view" 
-        type="application/pdf">
-        <p>您的浏览器不支持预览，请 <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击此处下载杂志 PDF</a>。</p>
-    </iframe>
+    <script>
+        // 簡單判斷是否為手機裝置 (Mobile / Tablet)
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // 如果是手機，直接導向原 PDF 檔（這樣就會完美符合手機大小、而且絕對可以順暢滑動！）
+            window.location.replace('pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf');
+        } else {
+            // 如果是電腦，才用 iframe 顯示
+            document.write('<iframe src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#toolbar=1&navpanes=0&view=FitH" class="desktop-view" type="application/pdf"></iframe>');
+        }
+    </script>
+
+    <!-- 萬一手機瀏覽器關閉了 JS 的防護備用畫面 -->
+    <noscript>
+        <div class="mobile-fallback">
+            <p>《千橡》2025年秋 (CCCA JOURNAL No.80)</p>
+            <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击直接打开杂志阅读</a>
+        </div>
+    </noscript>
 
 </body>
 </html>
