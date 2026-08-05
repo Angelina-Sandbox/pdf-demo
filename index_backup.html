@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- 微信、LINE、FB 分享時顯示的標題與描述 -->
@@ -18,35 +18,95 @@
     <meta property="og:type" content="website">
     
     <title>Angela-Sandbox - PDF Magazine Demo</title>
+
     <style>
-        /* 讓頁面滿版，沒有多餘的白邊 */
-        html, body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html, body {
             width: 100%;
             height: 100%;
-            background-color: #f0f2f5;
+            background-color: #1e1e1e;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             overflow: hidden;
         }
-        /* 讓容器自動佔滿整個瀏覽器視窗 */
-        .magazine-container {
-            width: 100%;
-            height: 100vh;
-            min-height:  100%
+
+        /* 顶部精致黑色控制栏 */
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
-        /* 讓 iframe 自動撐滿容器 */
-        iframe {
+
+        .brand-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e0e0e0;
+            letter-spacing: 1px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toolbar button {
+            background: #333333;
+            color: #ffffff;
+            border: 1px solid #555555;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .toolbar button:hover {
+            background: #555555;
+            border-color: #777777;
+        }
+
+        /* 原生 PDF 视图容器 */
+        .magazine-view {
             width: 100%;
-            height: 100%;
+            height: calc(100vh - 50px);
+            margin-top: 50px;
             border: none;
-<body>
+            display: block;
         }
     </style>
 </head>
+<body>
 
-    <div class="magazine-container">
-        <iframe src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true"></iframe>
+     <!-- 顶部顶部控制条 -->
+    <div class="toolbar">
+        <div class="toolbar-actions">
+            <!-- 点击可直接在独立页面打开全屏阅读 -->
+            <button onclick="window.open('pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf', '_blank')">全屏阅读 / 独立打开</button>
+        </div>
     </div>
+
+    <!-- 结合原生高稳定性加载机制的 PDF 展示窗 -->
+    <iframe 
+        id="pdf-frame" 
+        src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#toolbar=1&navpanes=0&view=FitH" 
+        class="magazine-view" 
+        type="application/pdf">
+        <p>您的浏览器不支持预览，请 <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击此处下载杂志 PDF</a>。</p>
+    </iframe>
 
 </body>
 </html>
