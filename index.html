@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- 微信、LINE、FB 分享時顯示的標題與描述 -->
@@ -34,56 +34,10 @@
             overflow: hidden;
         }
 
-        /* 顶部精致黑色控制栏 */
-        .toolbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            color: #ffffff;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .brand-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #e0e0e0;
-            letter-spacing: 1px;
-        }
-
-        .toolbar-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .toolbar button {
-            background: #333333;
-            color: #ffffff;
-            border: 1px solid #555555;
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s ease;
-        }
-
-        .toolbar button:hover {
-            background: #555555;
-            border-color: #777777;
-        }
-
-        /* 原生 PDF 视图容器 */
+        /* 原生 PDF 视图容器（直接滿版，不需要扣除控制列高度） */
         .magazine-view {
             width: 100%;
-            height: calc(100vh - 50px);
-            margin-top: 50px;
+            height: 100vh;
             border: none;
             display: block;
         }
@@ -91,15 +45,7 @@
 </head>
 <body>
 
-     <!-- 顶部顶部控制条 -->
-    <div class="toolbar">
-        <div class="toolbar-actions">
-            <!-- 点击可直接在独立页面打开全屏阅读 -->
-            <button onclick="window.open('pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf', '_blank')">全屏阅读 / 独立打开</button>
-        </div>
-    </div>
-
-    <!-- 结合原生高稳定性加载机制的 PDF 展示窗 -->
+    <!-- 結合原生高穩定性載入機制的 PDF 展示窗（進網頁即自動載入） -->
     <iframe 
         id="pdf-frame" 
         src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#toolbar=1&navpanes=0&view=FitH" 
