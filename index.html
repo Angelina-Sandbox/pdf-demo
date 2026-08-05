@@ -17,7 +17,7 @@
     <!-- 卡片類型 -->
     <meta property="og:type" content="website">
     
-    <title>Angela-Sandbox - PDF Magazine Demo</title>
+    <title>《千橡》2025年秋 - CCCA JOURNAL No.80</title>
 
     <style>
         * {
@@ -34,108 +34,24 @@
             overflow: hidden;
         }
 
-        /* 手機與電腦共用的精美封面引導層（完美解決分享卡片問題，並提供最佳的點擊載入體驗） */
-        #welcome-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1e1e1e;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            color: #ffffff;
-            padding: 20px;
-            text-align: center;
-            transition: opacity 0.3s ease;
-        }
-
-        #welcome-screen img {
-            width: 150px;
-            height: auto;
-            border-radius: 6px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            margin-bottom: 20px;
-        }
-
-        #welcome-screen h2 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #e0e0e0;
-        }
-
-        #welcome-screen p {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 24px;
-        }
-
-        .read-btn {
-            background-color: #007aff;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
-        }
-
-        .read-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* 實際載入 PDF 的容器 */
-        .magazine-view {
+        /* 使用 Mozilla 官方標準 PDF 檢視器，徹底解決尺寸過大與不能捲動的問題 */
+        .pdf-viewer-frame {
             width: 100%;
             height: 100vh;
             border: none;
             display: block;
         }
-
-        .hidden {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
 
-    <!-- 封面引導頁：讓微信/LINE抓得到封面與網址，同時確保點擊後手機載入完美且可捲動 -->
-    <div id="welcome-screen">
-        <img src="images/cover.jpg" alt="《千橡》封面">
-        <h2>《千橡》2025年秋</h2>
-        <p>CCCA JOURNAL No.80</p>
-        <button class="read-btn" onclick="startReading()">点击开始阅读</button>
-    </div>
-
-    <!-- 點擊後才載入的 iframe 閱讀器 -->
+    <!-- 透過 Mozilla PDF.js 渲染器載入，保證手機與電腦大小完美適配、縮放正常、滑動絲滑 -->
     <iframe 
-        id="pdf-frame" 
-        class="magazine-view" 
+        src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://angelina-sandbox.github.io/pdf-demo/pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" 
+        class="pdf-viewer-frame" 
         type="application/pdf">
+        <p>您的浏览器不支持预览，请 <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击此处下载杂志 PDF</a>。</p>
     </iframe>
-
-    <script>
-        function startReading() {
-            // 淡出並隱藏封面引導頁
-            const screen = document.getElementById('welcome-screen');
-            screen.style.opacity = '0';
-            setTimeout(() => {
-                screen.classList.add('hidden');
-            }, 300);
-
-            // 動態載入 PDF，給手機瀏覽器一個明確的互動時機，確保排版完美且能順暢上下滑動
-            const iframe = document.getElementById('pdf-frame');
-            if (!iframe.src) {
-                iframe.src = 'pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#toolbar=1&navpanes=0&view=FitH';
-            }
-        }
-    </script>
 
 </body>
 </html>
