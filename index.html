@@ -34,8 +34,7 @@
             overflow: hidden;
         }
 
-        /* 滿版 PDF 雲端檢視器容器 */
-        .pdf-viewer-frame {
+        .pdf-frame {
             width: 100%;
             height: 100vh;
             border: none;
@@ -45,10 +44,10 @@
 </head>
 <body>
 
-    <!-- 一開網頁直接載入 PDF.js 檢視器：電腦自動雙頁、手機自動單頁，支援雲端線上串流 -->
+    <!-- 直接載入 PDF 檔案，讓手機與電腦各自用最順暢的原生閱讀器開啟 -->
     <iframe 
-        src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://angelina-sandbox.github.io/pdf-demo/pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" 
-        class="pdf-viewer-frame" 
+        src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" 
+        class="pdf-frame" 
         type="application/pdf">
         <p>您的浏览器不支持预览，请 <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击此处下载杂志 PDF</a>。</p>
     </iframe>
