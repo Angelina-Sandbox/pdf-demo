@@ -31,59 +31,27 @@
             height: 100%;
             background-color: #1e1e1e;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow: hidden;
         }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            color: #ffffff;
-        }
-
-        .container img {
-            width: 180px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            margin-bottom: 20px;
-        }
-
-        .container h1 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .container p {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #007aff;
-            color: white;
-            padding: 14px 32px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        /* 滿版 PDF 雲端檢視器容器 */
+        .pdf-viewer-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="images/cover.jpg" alt="《千橡》封面">
-        <h1>《千橡》2025年秋</h1>
-        <p>CCCA JOURNAL No.80</p>
-        <!-- 點擊後直接用手機原生最高效能的方式打開 PDF，保證大小完美、絕對可上下捲動 -->
-        <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" class="btn">点击开始阅读杂志</a>
-    </div>
+    <!-- 一開網頁直接載入 PDF.js 檢視器：電腦自動雙頁、手機自動單頁，支援雲端線上串流 -->
+    <iframe 
+        src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://angelina-sandbox.github.io/pdf-demo/pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" 
+        class="pdf-viewer-frame" 
+        type="application/pdf">
+        <p>您的浏览器不支持预览，请 <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf">点击此处下载杂志 PDF</a>。</p>
+    </iframe>
 
 </body>
 </html>
