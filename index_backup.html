@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 微信、LINE、FB 分享時顯示的標題與描述 -->
+    <meta property="og:title" content="《千橡》2025年秋">
+    <meta property="og:description" content="CCCA JOURNAL No.80">
+    
+    <!-- 分享時顯示的縮圖網址 -->
+    <meta property="og:image" content="https://angelina-sandbox.github.io/pdf-demo/images/cover.jpg">
+    
+    <!-- 網頁的網址 -->
+    <meta property="og:url" content="https://angelina-sandbox.github.io/pdf-demo/">
+    
+    <!-- 卡片類型 -->
+    <meta property="og:type" content="website">
+    
+    <title>Angela-Sandbox - PDF Magazine Demo</title>
+    <style>
+        /* 讓頁面滿版，沒有多餘的白邊 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f2f5;
+            overflow: hidden;
+        }
+        /* 讓容器自動佔滿整個瀏覽器視窗 */
+        .magazine-container {
+            width: 100%;
+            height: 100vh;
+            min-height:  100%
+        }
+        /* 讓 iframe 自動撐滿容器 */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+<body>
+        }
+    </style>
+</head>
+
+    <div class="magazine-container">
+        <iframe src="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true"></iframe>
+    </div>
+
+</body>
+</html>
