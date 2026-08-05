@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- 微信、LINE、FB 分享時顯示的標題與描述 -->
     <meta property="og:title" content="《千橡》2025年秋">
@@ -31,35 +31,71 @@
             height: 100%;
             background-color: #1e1e1e;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* 專門為手機與電腦設計的滿版響應式 PDF 容器 */
-        .pdf-container {
-            width: 100%;
-            height: 100vh;
-            background-color: #1e1e1e;
+        .container {
+            text-align: center;
+            padding: 20px;
+            color: #ffffff;
+            max-width: 400px;
         }
 
-        .pdf-object {
+        .container img {
+            width: 160px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            margin-bottom: 20px;
+        }
+
+        .container h1 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .container p {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: block;
             width: 100%;
-            height: 100%;
-            border: none;
+            background-color: #007aff;
+            color: white;
+            padding: 14px 0;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .btn-secondary {
+            background-color: #333333;
+            color: #ccc;
+            box-shadow: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="pdf-container">
-        <!-- 使用 object 標籤強制手機瀏覽器正確渲染 PDF 尺寸，支援雲端線上串流與流暢上下捲動 -->
-        <object data="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf#view=FitH" type="application/pdf" class="pdf-object">
-            <div style="text-align: center; padding: 40px; color: white;">
-                <p>您的浏览器暂不支持直接预览 PDF。</p>
-                <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" style="color: #007aff; font-size: 16px; margin-top: 10px; display: inline-block;">点击此处下载并阅读杂志 PDF</a>
-            </div>
-        </object>
+    <div class="container">
+        <img src="images/cover.jpg" alt="《千橡》封面">
+        <h1>《千橡》2025年秋</h1>
+        <p>CCCA JOURNAL No.80</p>
+        
+        <!-- 手機上最完美、絕不卡死的閱讀方式：直接呼叫手機原生 PDF 引擎順暢翻頁 -->
+        <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" class="btn">立即順暢閱讀雜誌</a>
+        
+        <!-- 備用連結：如果手機瀏覽器擋住，可直接線上檢視 -->
+        <a href="pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" target="_blank" class="btn btn-secondary">在新視窗中打開</a>
     </div>
 
 </body>
