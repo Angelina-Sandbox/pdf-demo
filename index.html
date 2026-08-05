@@ -34,7 +34,7 @@
             overflow: hidden;
         }
 
-        /* 使用 Mozilla 官方標準 PDF 檢視器，徹底解決尺寸過大與不能捲動的問題 */
+        /* 使用官方標準 PDF 檢視器，徹底解決尺寸過大與不能捲動的問題 */
         .pdf-viewer-frame {
             width: 100%;
             height: 100vh;
@@ -45,7 +45,7 @@
 </head>
 <body>
 
-    <!-- 透過 Mozilla PDF.js 渲染器載入，保證手機與電腦大小完美適配、縮放正常、滑動絲滑 -->
+    <!-- 透過官方 PDF 渲染器載入，保證手機與電腦大小完美適配、永遠不變大、滑動絲滑 -->
     <iframe 
         src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://angelina-sandbox.github.io/pdf-demo/pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf" 
         class="pdf-viewer-frame" 
