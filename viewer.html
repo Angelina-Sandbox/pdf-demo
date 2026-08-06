@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- 微信、LINE、FB 分享時顯示的標題與描述 -->
+    <meta property="og:title" content="《千橡》2025年秋 - PDF 專業閱讀器">
+    <meta property="og:description" content="CCCA JOURNAL No.80">
+    <meta property="og:image" content="https://angelina-sandbox.github.io/pdf-demo/images/cover.jpg">
+    <meta property="og:url" content="https://angelina-sandbox.github.io/pdf-demo/viewer.html">
+    <meta property="og:type" content="website">
+    
+    <title>《千橡》2025年秋 - PDF 專業閱讀器</title>
+
+    <!-- 引入 Mozilla PDF.js 官方的樣式與主程式庫 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #2b2b2b;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        /* 頂部極簡乾淨的導覽工具列 */
+        #toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #toolbar button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #toolbar button:active {
+            background-color: #555;
+        }
+
+        #page-info {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        /* PDF 內容顯示容器 */
+        #viewerContainer {
+            position: absolute;
+            top: 50px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: auto;
+            background-color: #333;
+            -webkit-overflow-scrolling: touch;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* 每一頁的畫布與陰影裝飾 */
+        .page-canvas-wrapper {
+            margin: 0 auto 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            background-color: white;
+            display: inline-block;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        /* 載入中提示 */
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 16px;
+            z-index: 2000;
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading">載入 PDF 中，請稍候...</div>
+
+    <!-- 自製乾淨無廣告的工具列 -->
+    <div id="toolbar">
+        <div class="toolbar-group">
+            <button id="prev">上一頁</button>
+            <span id="page-info"><span id="page_num">--</span> / <span id="page_count">--</span></span>
+            <button id="next">下一頁</button>
+        </div>
+        <div class="toolbar-group">
+            <button id="zoom_out">－</button>
+            <button id="zoom_in">＋</button>
+        </div>
+    </div>
+
+    <!-- PDF 渲染容器 -->
+    <div id="viewerContainer">
+        <div id="viewer"></div>
+    </div>
+
+    <script>
+        // 設定 PDF.js worker 路徑
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // 讀取你放在 pdf 資料夾底下的 PDF 檔案
+        const url = 'pdf/CCCA_Magazine_Perfect_Bookmarks_compressed.pdf';
+
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.2; // 預設縮放比例
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 載入 PDF 文件
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            document.getElementById('page_count').textContent = pdfDoc.numPages;
+            document.getElementById('loading').style.display = 'none';
+            renderPage(pageNum);
+        }).catch(function(error) {
+            document.getElementById('loading').textContent = 'PDF 載入失敗，請檢查檔案路徑。';
+            console.error(error);
+        });
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const container = document.getElementById('viewer');
+                container.innerHTML = ''; // 清空上一頁
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'page-canvas-wrapper';
+                
+                const pageCanvas = document.createElement('canvas');
+                const pageCtx = pageCanvas.getContext('2d');
+                wrapper.appendChild(pageCanvas);
+                container.appendChild(wrapper);
+
+                // 根據螢幕寬度自動調整縮放，確保手機上不會過大或過小
+                let viewport = page.getViewport({scale: scale});
+                const containerWidth = document.getElementById('viewerContainer').clientWidth - 40;
+                if (viewport.width > containerWidth) {
+                    scale = containerWidth / page.getViewport({scale: 1.0}).width;
+                    viewport = page.getViewport({scale: scale});
+                }
+
+                pageCanvas.height = viewport.height;
+                pageCanvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: pageCtx,
+                    viewport: viewport
+                };
+
+                const renderTask = page.render(renderContext);
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('page_num').textContent = num;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function onPrevPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        document.getElementById('prev').addEventListener('click', onPrevPage);
+        document.getElementById('next').addEventListener('click', onNextPage);
+
+        document.getElementById('zoom_in').addEventListener('click', function() {
+            scale += 0.2;
+            renderPage(pageNum);
+        });
+
+        document.getElementById('zoom_out').addEventListener('click', function() {
+        });
+            scale = Math.max(0.6, scale - 0.2);
+            renderPage(pageNum);
+    </script>
+
+</body>
+</html>
